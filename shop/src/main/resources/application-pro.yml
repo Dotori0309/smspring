@@ -1,3 +1,8 @@
+
+# SpringBoot 내장 서버 환경 서버 설정
+# bootwar 실행시에만 적용됨
+# war tomcat 실행 할때는 적용 안됨
+
 server:
   port: 8443
   ssl:
@@ -10,16 +15,12 @@ server:
       charset: UTF-8
       force: true
 spring:
-  config:
-    import: optional:file:.env[.properties]  # .env import
   mvc:
     view:
       prefix: /views/
       suffix: .jsp
   datasource:
-    #url: jdbc:mysql://127.0.0.1:3306/shopdb?serverTimezone=Asia/Seoul
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mysql://127.0.0.1:3306/shopdb?characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/shopdb?serverTimezone=Asia/Seoul
     username: smuser
     password: ENC(idIWCdznEM3ggslDeTmLJw==)
 
@@ -30,12 +31,12 @@ mybatis:
     map-underscore-to-camel-case: true
 logging:
   level:
-    root: info
+    root: error
 
 # Application Config
 app:
   key:
-    skey: ${MY_KEY}
+    skey: mykey
 
 
 
