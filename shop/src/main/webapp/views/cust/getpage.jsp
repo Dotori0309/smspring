@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="col-sm-10">
-  <h2>Cust Get Page</h2>
+  <h2>Cust GetPage Page</h2>
   <table class="table table-bordered">
     <thead>
     <tr>
@@ -14,9 +14,9 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="c" items="${clist.list}">
+    <c:forEach var="c" items="${clist.getList()}">
       <tr>
-        <td><a href="/cust/detail?id=${c.custId}">${c.custId}</a></td>
+        <td>${c.custId}</td>
         <td>${c.custName}</td>
         <td>
           <fmt:parseDate value="${ c.custRegdate }"
@@ -32,22 +32,5 @@
     </c:forEach>
     </tbody>
   </table>
-  <ul class="pagination">
-    <c:if test="${clist.hasPreviousPage}">
-      <li><a href="${target}/getpage?pageNo=${clist.prePage}">&laquo;</a></li>
-    </c:if>
-    <c:forEach var="page" items="${clist.navigatepageNums}">
-      <c:choose>
-        <c:when test="${clist.pageNum eq page}">
-          <li class="active"><a href="#">${page}</a></li>
-        </c:when>
-        <c:otherwise>
-          <li><a href="${target}/getpage?pageNo=${page}">${page}</a></li>
-        </c:otherwise>
-      </c:choose>
-    </c:forEach>
-    <c:if test="${clist.hasNextPage}">
-      <li><a href="${target}/getpage?pageNo=${clist.nextPage}">&raquo;</a></li>
-    </c:if>
-  </ul>
+  <jsp:include page="../page.jsp"/>
 </div>

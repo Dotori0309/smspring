@@ -4,6 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.sm.app.repository.CustRepository">
 
+    <select id="getpage" resultType="Cust">
+        SELECT * FROM cust
+    </select>
     <select id="select" parameterType="String" resultType="Cust">
         SELECT * FROM cust WHERE cust_id=#{custId}
     </select>
