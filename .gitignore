@@ -1,0 +1,17 @@
+
+.DS_Store
+
+.idea/
+*.iml
+out/
+.vscode/
+.gradle/
+build/
+*.class
+*.log
+node_modules/
+
+*.p12
+*.keystore
+*.jks
+application-*.yml
