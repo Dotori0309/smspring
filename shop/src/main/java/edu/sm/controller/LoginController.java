@@ -24,6 +24,12 @@ public class LoginController {
     final BCryptPasswordEncoder bCryptPasswordEncoder;
     final StandardPBEStringEncryptor standardPBEStringEncryptor;
 
+    @RequestMapping("/updatepwd")
+    public String updatepwd(Model model) {
+        model.addAttribute("center","updatepwd");
+        model.addAttribute("left","left");
+        return "index";
+    }
     @RequestMapping("/register")
     public String main(Model model) {
         model.addAttribute("center","register");
@@ -37,7 +43,31 @@ public class LoginController {
         custService.register(cust);
         return "redirect:/login";
     }
-
+    @RequestMapping("/custinfo")
+    public String custinfo(Model model, @RequestParam("id") String id) throws Exception {
+        Cust dbCust = custService.get(id);
+        dbCust.setCustAddr(standardPBEStringEncryptor.decrypt(dbCust.getCustAddr()));
+        if(dbCust != null){
+            model.addAttribute("cust",dbCust);
+        }
+        model.addAttribute("center","custinfo");
+        return "index";
+    }
+    @RequestMapping("/updatecustinfo")
+    public String updatecustinfo(Model model, Cust cust) throws Exception {
+        boolean result = bCryptPasswordEncoder.matches(cust.getCustPwd(),
+                custService.get(cust.getCustId()).getCustPwd());
+        System.out.println(result);
+        if(result != true){
+            model.addAttribute("msg","비밀번호가 틀렸습니다.");
+            model.addAttribute("center","error");
+            return "index";
+        }
+        cust.setCustAddr(standardPBEStringEncryptor.encrypt(cust.getCustAddr()));
+        cust.setCustPwd(bCryptPasswordEncoder.encode(cust.getCustPwd()));
+        custService.modify(cust);
+        return "redirect:/custinfo?id=" + cust.getCustId();
+    }
     @RequestMapping("/login")
     public String add(Model model) {
         model.addAttribute("center","login");
