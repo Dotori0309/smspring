@@ -27,30 +27,30 @@
     <p>Resize this responsive page to see the effect!</p>
 </div>
 <ul class="nav justify-content-end">
-<c:choose>
-    <c:when test="${sessionScope.cust.custId == null}">
-        <li class="nav-item">
-            <a class="nav-link" href="<c:url value="/register"/> ">Register</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<c:url value="/login"/>">Login</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
-    </c:when>
-    <c:otherwise>
-        <li class="nav-item">
-            <a class="nav-link" href="<c:url value="/custinfo?id=${sessionScope.cust.custId}"/> ">${sessionScope.cust.custId}</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="<c:url value="/logout"/> ">Logout</a>
-        </li>
-    </c:otherwise>
-</c:choose>
+    <c:choose>
+        <c:when test="${sessionScope.cust.custId == null}">
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/register"/> ">Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/login"/>">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+        </c:when>
+        <c:otherwise>
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/custinfo?id=${sessionScope.cust.custId}"/> ">${sessionScope.cust.custId}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<c:url value="/logout"/> ">Logout</a>
+            </li>
+        </c:otherwise>
+    </c:choose>
 </ul>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <a class="navbar-brand" href="<c:url value="/"/>">Home</a>
@@ -63,7 +63,7 @@
                 <a class="nav-link" href="<c:url value="/cust"/>">Cust</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<c:url value="/item"/>">Item</a>
+                <a class="nav-link" href="<c:url value="/product"/>">Product</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<c:url value="/map"/> ">Map</a>
