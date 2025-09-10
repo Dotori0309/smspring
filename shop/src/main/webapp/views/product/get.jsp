@@ -47,6 +47,5 @@
 
     </tbody>
   </table>
-  <jsp:include page="../page.jsp"/>
 
 </div>

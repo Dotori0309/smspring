@@ -66,4 +66,25 @@ public class ProductController {
         productService.register(product);
         return "redirect:/product";
     }
+
+    @RequestMapping("/detail")
+    public String detail(@RequestParam("id") int id, Model model) throws Exception {
+        Product product = productService.get(id);
+        model.addAttribute("p", product);
+        model.addAttribute("center", dir + "detail");
+        model.addAttribute("left", dir + "left");
+        return "index";
+    }
+
+    @PostMapping("/updateimpl")
+    public String updateimpl(@ModelAttribute Product product) throws Exception {
+        productService.modify(product);
+        return "redirect:/product/detail?id=" + product.getProductId();
+    }
+
+    @RequestMapping("/delete")
+    public String delete(@RequestParam("id") int id) throws Exception {
+        productService.remove(id);
+        return "redirect:/product/getpage";
+    }
 }
