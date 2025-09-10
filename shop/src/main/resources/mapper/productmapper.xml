@@ -12,6 +12,10 @@
         select * from product p
                           inner join cate c on p.cate_id = c.cate_id
     </select>
+    <select id="getpage" resultType="Product">
+        select * from product p
+                          inner join cate c on p.cate_id = c.cate_id
+    </select>
     <insert id="insert" parameterType="Product">
         INSERT INTO product VALUES (0,#{productName},#{productPrice},#{discountRate}, #{productImg}, NOW(), NOW(), #{cateId})
     </insert>

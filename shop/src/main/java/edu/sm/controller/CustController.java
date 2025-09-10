@@ -55,14 +55,18 @@ public class CustController {
         model.addAttribute("center", dir+"get");
         return "index";
     }
-    @RequestMapping("/getpage")
-    public String getpage(@RequestParam(value="pageNo", defaultValue = "1") int pageNo, Model model) throws Exception {
-        PageInfo<Cust> p = null;
-        p = new PageInfo<>(custService.getPage(pageNo), 3); // 5:하단 네비게이션 개수
-        model.addAttribute("target","/cust");
-        model.addAttribute("clist",p);
-        model.addAttribute("left", dir+"left");
-        model.addAttribute("center", dir+"getpage");
+    @RequestMapping("/allpage")
+    public String allpage(@RequestParam(value="pageNo", defaultValue = "1") int pageNo, Model model) throws Exception {
+        PageInfo<Cust> p;
+        try {
+            p = new PageInfo<>(custService.getPage(pageNo), 5); // 5:하단 네비게이션 개수
+        } catch (Exception e) {
+            throw new Exception("시스템 장애: ER0001");
+        }
+        model.addAttribute("pageinfo",p);
+        model.addAttribute("pageurl","/cust/allpage");
+        model.addAttribute("left",dir+"left");
+        model.addAttribute("center",dir+"allpage");
         return "index";
     }
 

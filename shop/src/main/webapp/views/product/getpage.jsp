@@ -22,11 +22,11 @@
     </thead>
     <tbody>
     <c:choose>
-      <c:when test="${plist == null}">
+      <c:when test="${ppage == null}">
         <h5>데이터가 없습니다.</h5>
       </c:when>
       <c:otherwise>
-        <c:forEach var="p" items="${plist}">
+        <c:forEach var="p" items="${ppage.getList()}">
           <tr>
             <td><img src="/imgs/${p.productImg}"></td>
             <td><a href="/product/detail?id=${p.productId}">${p.productId}</a></td>

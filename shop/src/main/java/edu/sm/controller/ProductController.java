@@ -1,5 +1,6 @@
 package edu.sm.controller;
 
+import com.github.pagehelper.PageInfo;
 import edu.sm.app.dto.Product;
 import edu.sm.app.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @Slf4j
@@ -34,9 +36,27 @@ public class ProductController {
         return "index";
     }
     @RequestMapping("/get")
-    public String get(Model model) {
+    public String get(Model model) throws Exception {
+        java.util.List<edu.sm.app.dto.Product> products = productService.get();
+        log.info("Number of products fetched: {}", products.size());
+        model.addAttribute("plist", products);
         model.addAttribute("center",dir+"get");
         model.addAttribute("left",dir+"left");
+        return "index";
+    }
+
+    @RequestMapping("/getpage")
+    public String getpage(@RequestParam(value="pageNo", defaultValue = "1") int pageNo, Model model) throws Exception {
+        PageInfo<Product> p;
+        try {
+            p = new PageInfo<>(productService.getPage(pageNo), 5); // 5:하단 네비게이션 개수
+        } catch (Exception e) {
+            throw new Exception("시스템 장애: ER0001");
+        }
+        model.addAttribute("pageinfo",p);
+        model.addAttribute("pageurl","/product/getpage");
+        model.addAttribute("left",dir+"left");
+        model.addAttribute("center",dir+"getpage");
         return "index";
     }
 
