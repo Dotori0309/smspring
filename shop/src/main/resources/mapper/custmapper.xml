@@ -11,7 +11,8 @@
                 cust_name like concat('%',#{custName},'%')
             </if>
             <if test="startDate != null and !startDate.equals('')">
-                <!--and cust_regdate &gt;= #{startDate} -->
+                <!--and cust_regdate &gt;= #
+                {startDate} -->
                 <![CDATA[
                   and cust_regdate  >=  #{startDate}
 
@@ -33,7 +34,7 @@
         SELECT * FROM cust
     </select>
     <insert id="insert" parameterType="Cust">
-        INSERT INTO cust VALUES (#{custId},#{custPwd},#{custName},#{custAddr}, NOW(), NOW())
+        INSERT INTO cust (cust_id, cust_pwd, cust_name, cust_addr, cust_regdate, cust_update) VALUES (#{custId},#{custPwd},#{custName},#{custAddr}, NOW(), NOW())
     </insert>
     <update id="update" parameterType="Cust">
         UPDATE cust SET cust_pwd=#{custPwd},cust_name=#{custName},cust_addr=#{custAddr}, cust_update=NOW() WHERE cust_id=#{custId}

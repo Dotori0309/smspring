@@ -8,6 +8,33 @@
 </style>
 <div class="col-sm-9">
   <h2>Product Get Page</h2>
+  <form action="/product/search" method="get"
+        style="margin-bottom: 30px;" id="search_form" class="form-inline well">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" name="productName" class="form-control" id="name" value="${productSearch.productName}">
+    </div>
+    <div class="form-group">
+      <label for="sprice">Start:</label>
+      <input type="number" name="startPrice" class="form-control" id="sprice" min="0" step="5000" value="${productSearch.startPrice}">
+    </div>
+    <div class="form-group">
+      <label for="eprice">End:</label>
+      <input type="number" name="endPrice" class="form-control" id="eprice" min="0" step="5000" value="${productSearch.endPrice}">
+    </div>
+    <div class="form-group">
+      <label for="cate">Category:</label>
+      <select class="form-control" name="cateId" id="cate">
+        <option value="0" ${productSearch.cateId == 0 ? 'selected' : ''}>전체</option>
+        <option value="10" ${productSearch.cateId == 10 ? 'selected' : ''}>하의</option>
+        <option value="20" ${productSearch.cateId == 20 ? 'selected' : ''}>상의</option>
+        <option value="30" ${productSearch.cateId == 30 ? 'selected' : ''}>신발</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <input type="submit" class="btn btn-info">Search</input>
+    </div>
+  </form>
   <table id="product_table" class="table table-bordered">
     <thead>
     <tr>

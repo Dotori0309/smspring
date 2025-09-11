@@ -23,7 +23,7 @@ class InsertTests {
 
     @Test
     void contextLoads() throws Exception {
-        String id = "id01";
+        String id = "id01" + System.currentTimeMillis();
         String pwd = "111111";
         String name = "이말숙";
         String addr =  "충청도 아산시";
