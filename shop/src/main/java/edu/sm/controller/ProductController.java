@@ -54,7 +54,7 @@ public class ProductController {
         PageInfo<Product> p = null;
         p = new PageInfo<>(productService.getPage(pageNo), 3); // 5:하단 네비게이션 개수
         model.addAttribute("target","/product");
-        model.addAttribute("clist",p);
+        model.addAttribute("pageinfo",p);
         model.addAttribute("left", dir+"left");
         model.addAttribute("center", dir+"getpage");
         return "index";

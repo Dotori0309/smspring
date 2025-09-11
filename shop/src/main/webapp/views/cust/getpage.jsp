@@ -15,11 +15,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="c" items="${pageinfo.getList()}">
+                    <c:if test="${empty clist.list}">
                         <tr>
-                            <td><a href="/cust/get?id=${c.id}">${c.id}</a></td>
-                            <td>${c.pwd}</td>
-                            <td>${c.name}</td>
+                            <td colspan="3">No customers found.</td>
+                        </tr>
+                    </c:if>
+                    <c:forEach var="c" items="${clist.list}">
+                        <tr>
+                            <td><a href="/cust/get?id=${c.custId}">${c.custId}</a></td>
+                            <td>${c.custPwd}</td>
+                            <td>${c.custName}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
