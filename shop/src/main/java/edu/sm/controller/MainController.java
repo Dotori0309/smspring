@@ -9,14 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Random;
+
 @Controller
 @Slf4j
 public class MainController {
 
     @RequestMapping("/")
     public String main(Model model) {
-        log.info("Test..");
-        // Database 데이터를 가지고 온다.
+        Random random = new Random();
+        log.info(""+random.nextInt(100)+1);
         return "index";
     }
 

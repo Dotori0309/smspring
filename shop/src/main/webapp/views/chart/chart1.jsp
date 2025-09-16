@@ -10,6 +10,9 @@
   chart1 = {
     init:function(){
       this.getdata();
+      setInterval(()=>{
+        this.getdata();
+      },4000);
     },
     getdata:function(){
       $.ajax({

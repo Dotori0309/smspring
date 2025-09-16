@@ -12,13 +12,15 @@ import org.springframework.context.annotation.Configuration;
 @EnableEncryptableProperties
 public class JasyptConfig {
 
+    @Value("${app.key.skey}")
+    private String skey;
     private static final String ALGORITHM =  "PBEWithMD5AndDES";
 
     @Bean("jasyptStringEncryptor")
-    public StringEncryptor jasyptStringEncryptor(@Value("${app.key.skey}") String key) {
+    public StringEncryptor stringEncryptor() {
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
-        config.setPassword(key); // 암호화 키
+        config.setPassword(skey); // 암호화 키
         config.setAlgorithm(ALGORITHM); // 알고리즘
         config.setKeyObtentionIterations("1000"); // 반복할 해싱 회수
         config.setPoolSize("1"); // 인스턴스 pool
