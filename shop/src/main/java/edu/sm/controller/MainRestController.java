@@ -37,12 +37,12 @@ public class MainRestController {
 
     @RequestMapping("/saveaudio")
     public Object saveaudio(@RequestParam("file") MultipartFile file) throws IOException {
-        FileUploadUtil.saveFile(file, "/Users/dotori/smspring/audios/");
+        FileUploadUtil.saveFile(file, "/smspring/audios/");
         return "OK";
     }
     @RequestMapping("/saveimg")
     public Object saveimg(@RequestParam("file") MultipartFile file) throws IOException {
-        FileUploadUtil.saveFile(file, "/Users/dotori/smspring/imgs/");
+        FileUploadUtil.saveFile(file, "/smspring/imgs/");
         return "OK";
     }
 }
