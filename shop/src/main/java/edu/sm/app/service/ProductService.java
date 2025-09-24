@@ -22,7 +22,7 @@ public class ProductService implements SmService<Product, Integer> {
 
     final ProductRepository productRepository;
 
-    @Value("${app.dir.uploadimgsdir:/smspring/uploadimgs/}")
+    @Value("${app.dir.uploadimgsdir}")
     String imgDir;
 
     @Override
