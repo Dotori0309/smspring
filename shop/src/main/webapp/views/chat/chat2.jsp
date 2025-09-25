@@ -78,84 +78,98 @@
 </style>
 
 <script>
-  let chat2 = { // Changed object name for chat2
-    id:'',
-    stompClient:null,
-    init:function(){
-      this.id = $('#user_id2').text(); // Changed ID for chat2
-      $('#connect2').click(()=>{
+  let chat2 = {
+    id: '',
+    stompClient: null,
+    init: function () {
+      this.id = $('#user_id2').text();
+      this.setConnected(false); // Initially disable send buttons
+
+      $('#connect2').click(() => {
         this.connect();
       });
-      $('#disconnect2').click(()=>{
+      $('#disconnect2').click(() => {
         this.disconnect();
       });
-      // Add send functions for chat2 if needed, currently placeholders
-      $('#sendall2').click(()=>{
+      $('#sendall2').click(() => {
         let msg = JSON.stringify({
-          'sendid' : this.id,
-          'content1' : $("#alltext2").val()
+          'sendid': this.id,
+          'content1': $("#alltext2").val()
         });
-        this.stompClient.send("/receiveall", {}, msg); // Assuming same endpoint for now
+        this.stompClient.send("/receiveall", {}, msg);
+        $("#alltext2").val('');
       });
-      $('#sendme2').click(()=>{
+      $('#sendme2').click(() => {
         let msg = JSON.stringify({
-          'sendid' : this.id,
-          'content1' : $("#metext2").val()
+          'sendid': this.id,
+          'content1': $("#metext2").val()
         });
-        this.stompClient.send("/receiveme", {}, msg); // Assuming same endpoint for now
+        this.stompClient.send("/receiveme", {}, msg);
+        $("#metext2").val('');
       });
-      $('#sendto2').click(()=>{
+      $('#sendto2').click(() => {
         var msg = JSON.stringify({
-          'sendid' : this.id,
-          'receiveid' : $('#target2').val(),
-          'content1' : $('#totext2').val()
+          'sendid': this.id,
+          'receiveid': $('#target2').val(),
+          'content1': $('#totext2').val()
         });
         this.stompClient.send('/receiveto', {}, msg);
+        $('#totext2').val('');
       });
     },
-    connect:function(){
+    connect: function () {
       let sid = this.id;
-      let socket = new SockJS('${websocketurl}chat'); // Assuming same websocketurl
+      let socket = new SockJS('/chat');
       this.stompClient = Stomp.over(socket);
-      this.setConnected(true);
-      this.stompClient.connect({}, function(frame) {
+
+      // Use arrow function to preserve 'this' context
+      this.stompClient.connect({}, (frame) => {
         console.log('Connected: ' + frame);
-        this.subscribe('/send', function(msg) {
-          $("#all2").prepend( // Changed ID for chat2
-                  "<h4>" + JSON.parse(msg.body).sendid +":"+
-                  JSON.parse(msg.body).content1
-                  + "</h4>");
+        this.setConnected(true); // Set connected status inside the callback
+
+        this.stompClient.subscribe('/send', (msg) => {
+          $("#all2").prepend(
+            "<h4>" + JSON.parse(msg.body).sendid + ":" +
+            JSON.parse(msg.body).content1 +
+            "</h4>");
         });
-        this.subscribe('/send/'+sid, function(msg) {
-          $("#me2").prepend( // Changed ID for chat2
-                  "<h4>" + JSON.parse(msg.body).sendid +":"+
-                  JSON.parse(msg.body).content1+ "</h4>");
+        this.stompClient.subscribe('/send/' + sid, (msg) => {
+          $("#me2").prepend(
+            "<h4>" + JSON.parse(msg.body).sendid + ":" +
+            JSON.parse(msg.body).content1 + "</h4>");
         });
-        this.subscribe('/send/to/'+sid, function(msg) {
-          $("#to2").prepend( // Changed ID for chat2
-                  "<h4>" + JSON.parse(msg.body).sendid +":"+
-                  JSON.parse(msg.body).content1
-                  + "</h4>");
+        this.stompClient.subscribe('/send/to/' + sid, (msg) => {
+          $("#to2").prepend(
+            "<h4>" + JSON.parse(msg.body).sendid + ":" +
+            JSON.parse(msg.body).content1 +
+            "</h4>");
         });
       });
     },
-    disconnect:function(){
+    disconnect: function () {
       if (this.stompClient !== null) {
         this.stompClient.disconnect();
       }
       this.setConnected(false);
       console.log("Disconnected");
     },
-    setConnected:function(connected){
+    setConnected: function (connected) {
+      // Control UI elements based on connection status
+      $("#connect2").prop("disabled", connected);
+      $("#disconnect2").prop("disabled", !connected);
+      $("#sendall2, #sendme2, #sendto2").prop("disabled", !connected);
+      $("#alltext2, #metext2, #target2, #totext2").prop("disabled", !connected);
+
       if (connected) {
-        $("#status2").text("Connected"); // Changed ID for chat2
+        $("#status2").text("Connected");
       } else {
-        $("#status2").text("Disconnected"); // Changed ID for chat2
+        $("#status2").text("Disconnected");
+        $("#all2, #me2, #to2").empty(); // Clear chat windows on disconnect
       }
     }
   }
-  $(()=>{
-    chat2.init(); // Changed object name for chat2
+  $(() => {
+    chat2.init();
   })
 </script>
 
