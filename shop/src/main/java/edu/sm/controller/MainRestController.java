@@ -33,16 +33,20 @@ public class MainRestController {
     public Object getwt1(@RequestParam("loc") String loc) throws IOException, ParseException {
         return WeatherUtil.getWeather(loc,wkey);
     }
-
+    @RequestMapping("/savedata")
+    public Object savedata(@RequestParam("data") String data) throws IOException {
+        log.info(data);
+        return "OK";
+    }
 
     @RequestMapping("/saveaudio")
     public Object saveaudio(@RequestParam("file") MultipartFile file) throws IOException {
-        FileUploadUtil.saveFile(file, "C:/smspring/audios/");
+        FileUploadUtil.saveFile(file, "/Users/dotori/smspring/audios");
         return "OK";
     }
     @RequestMapping("/saveimg")
     public Object saveimg(@RequestParam("file") MultipartFile file) throws IOException {
-        FileUploadUtil.saveFile(file, "C:/smspring/imgs/");
+        FileUploadUtil.saveFile(file, "/Users/dotori/smspring/imgs");
         return "OK";
     }
 }
