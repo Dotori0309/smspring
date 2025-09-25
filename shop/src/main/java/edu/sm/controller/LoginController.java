@@ -38,10 +38,18 @@ public class LoginController {
     }
     @RequestMapping("/registerimpl")
     public String registerimpl(Model model, Cust cust) throws Exception {
-        cust.setCustPwd(bCryptPasswordEncoder.encode(cust.getCustPwd()));
-        cust.setCustAddr(standardPBEStringEncryptor.encrypt(cust.getCustAddr()));
-        custService.register(cust);
-        return "redirect:/login";
+        try {
+            cust.setCustPwd(bCryptPasswordEncoder.encode(cust.getCustPwd()));
+            cust.setCustAddr(standardPBEStringEncryptor.encrypt(cust.getCustAddr()));
+            custService.register(cust);
+            return "redirect:/login";
+        } catch (Exception e) {
+            log.error("Registration failed for user: {}", cust.getCustId(), e);
+            e.printStackTrace(System.err); // Explicitly print stack trace to console
+            model.addAttribute("msg", "회원가입에 실패했습니다. 다시 시도해주세요.");
+            model.addAttribute("center", "register");
+            return "index";
+        }
     }
     @RequestMapping("/custinfo")
     public String custinfo(Model model, @RequestParam("id") String id) throws Exception {

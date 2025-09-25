@@ -3,6 +3,7 @@ package edu.sm.controller;
 import edu.sm.app.dto.Content;
 import edu.sm.app.dto.Marker;
 import edu.sm.app.dto.Search;
+import edu.sm.app.service.LoggerService1;
 import edu.sm.app.service.MarkerService;
 import edu.sm.util.FileUploadUtil;
 import edu.sm.util.WeatherUtil;
@@ -26,6 +27,9 @@ import java.util.List;
 @Slf4j
 public class MainRestController {
 
+
+    private final LoggerService1 loggerService1;
+
     @Value("${app.key.wkey}")
     String wkey;
 
@@ -35,25 +39,18 @@ public class MainRestController {
     }
     @RequestMapping("/savedata")
     public Object savedata(@RequestParam("data") String data) throws IOException {
-        log.info(data);
+        loggerService1.save1(data);
         return "OK";
     }
 
     @RequestMapping("/saveaudio")
     public Object saveaudio(@RequestParam("file") MultipartFile file) throws IOException {
-        FileUploadUtil.saveFile(file, "/Users/dotori/smspring/audios");
+        FileUploadUtil.saveFile(file, "C:/smspring/audios/");
         return "OK";
     }
     @RequestMapping("/saveimg")
     public Object saveimg(@RequestParam("file") MultipartFile file) throws IOException {
-        FileUploadUtil.saveFile(file, "/Users/dotori/smspring/imgs");
+        FileUploadUtil.saveFile(file, "C:/smspring/imgs/");
         return "OK";
     }
 }
-
-
-
-
-
-
-
