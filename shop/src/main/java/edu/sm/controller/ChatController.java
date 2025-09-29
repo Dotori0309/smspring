@@ -36,12 +36,15 @@ public class ChatController {
     }
     @RequestMapping("/chat2")
     public String chat2(Model model) {
+        model.addAttribute("websocketurl",webSocketUrl);
         model.addAttribute("center",dir+"chat2");
         model.addAttribute("left",dir+"left");
         return "index";
     }
     @RequestMapping("/chat3")
     public String map2(Model model) {
+        model.addAttribute("websocketurl",webSocketUrl);
+
         model.addAttribute("center",dir+"chat3");
         model.addAttribute("left",dir+"left");
         return "index";

@@ -6,17 +6,20 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
-@EnableWebSocketMessageBroker
 @Configuration
-public class StomWebSocketConfig implements WebSocketMessageBrokerConfigurer{
+@EnableWebSocketMessageBroker
+public class StomWebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/chat").setAllowedOriginPatterns("*").withSockJS();
         registry.addEndpoint("/adminchat").setAllowedOriginPatterns("*").withSockJS();
     }
+
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/send","/adminsend");
+        registry.enableSimpleBroker("/send", "/adminsend");
+        // 권장: 클라이언트 발행 접두사
+        registry.setApplicationDestinationPrefixes("/app");
     }
 }

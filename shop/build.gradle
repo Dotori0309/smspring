@@ -46,7 +46,6 @@ dependencies {
     implementation 'org.webjars:stomp-websocket:2.3.3'
     implementation 'org.webjars:bootstrap:3.3.7'
 
-
     // logback
     implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
     //tomcat
@@ -57,7 +56,8 @@ dependencies {
 
     // Mybatis & MySQL Driver
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-    runtimeOnly 'com.mysql:mysql-connector-j'
+//    runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'org.postgresql:postgresql:42.7.4'
 
     // JSON
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
