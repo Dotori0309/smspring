@@ -1,9 +1,6 @@
 package edu.sm.controller;
 
-import edu.sm.app.springai.service1.AiServiceByChatClient;
-import edu.sm.app.springai.service1.AiServiceChainOfThoughtPrompt;
-import edu.sm.app.springai.service1.AiServiceFewShotPrompt;
-import edu.sm.app.springai.service1.AiServiceFewShotPrompt2;
+import edu.sm.app.springai.service1.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +17,9 @@ public class Ai1Controller {
     final AiServiceChainOfThoughtPrompt aiServiceChainOfThoughtPrompt;
     final AiServiceFewShotPrompt aiServiceFewShotPrompt;
     final AiServiceFewShotPrompt2 aiServiceFewShotPrompt2;
+    private final AiServicePromptTemplate aiServicePromptTemplate;
+    private final AiServiceRoleAssignmentPrompt aiServiceRoleAssignmentPrompt;
+    private final AiServiceSelfConsistency aiServiceSelfConsistency;
 
     @RequestMapping ("/few-shot-prompt")
     public String fewShotPrompt(@RequestParam("question") String question) {
@@ -47,5 +47,18 @@ public class Ai1Controller {
         return aiServiceChainOfThoughtPrompt.chainOfThought(question);
     }
 
+    @RequestMapping("/prompt-template")
+    public Flux<String> promptTemplate(@RequestParam("statement") String statement, @RequestParam("language") String language){
+        return aiServicePromptTemplate.promptTemplate1(statement, language);
+    }
 
+    @RequestMapping ("/role-assignment")
+    public Flux<String> roleAssignment(@RequestParam("requirements") String question) {
+        return aiServiceRoleAssignmentPrompt.roleAssignment(question);
+    }
+
+    @RequestMapping("/self-consistency")
+    public Flux<String> selfConsistency(@RequestParam("content") String question){
+        return Flux.just(aiServiceSelfConsistency.selfConsistency(question));
+    }
 }

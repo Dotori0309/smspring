@@ -77,5 +77,7 @@ public class AiServicePromptTemplate {
         .stream()
         .content();
     return response;
-  }     
+  }
+
+    
 }
