@@ -3,6 +3,7 @@ package edu.sm.controller;
 import edu.sm.app.springai.service1.AiServiceByChatClient;
 import edu.sm.app.springai.service1.AiServiceChainOfThoughtPrompt;
 import edu.sm.app.springai.service1.AiServiceFewShotPrompt;
+import edu.sm.app.springai.service1.AiServiceFewShotPrompt2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,39 +12,40 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
 @RestController
-@Slf4j
 @RequestMapping("/ai1")
+@Slf4j
 @RequiredArgsConstructor
 public class Ai1Controller {
     final AiServiceByChatClient aiServiceByChatClient;
-    private final AiServiceChainOfThoughtPrompt aiServiceChainOfThoughtPrompt;
-    private final AiServiceFewShotPrompt aiServiceFewShotPrompt;
+    final AiServiceChainOfThoughtPrompt aiServiceChainOfThoughtPrompt;
+    final AiServiceFewShotPrompt aiServiceFewShotPrompt;
+    final AiServiceFewShotPrompt2 aiServiceFewShotPrompt2;
 
-    @RequestMapping("/chat-model")
-    public String chatModal(@RequestParam("question") String question) {
-        return aiServiceByChatClient.generateText(question);
-    }
-    @RequestMapping("/few-shot-prompt")
-    public String fewShot(@RequestParam("question") String question) {
+    @RequestMapping ("/few-shot-prompt")
+    public String fewShotPrompt(@RequestParam("question") String question) {
         return aiServiceFewShotPrompt.fewShotPrompt(question);
     }
-    @RequestMapping("/chat-model-stream")
-    public Flux<String> chatModalStream(@RequestParam("question") String question) {
+
+    @RequestMapping ("/few-shot-prompt2")
+    public String fewShotPrompt2(@RequestParam("question") String question) {
+        log.info(aiServiceFewShotPrompt2.fewShotPrompt2(question));
+        return aiServiceFewShotPrompt2.fewShotPrompt2(question);
+    }
+
+    @RequestMapping ("/chat-model")
+    public String chatModel(@RequestParam("question") String question) {
+        return aiServiceByChatClient.generateText(question);
+    }
+
+    @RequestMapping ("/chat-model-stream")
+    public Flux<String> chatModelStream(@RequestParam("question") String question) {
         return aiServiceByChatClient.generateStreamText(question);
     }
-    @RequestMapping("/chat-of-thought")
+
+    @RequestMapping ("/chat-of-thought")
     public Flux<String> chatOfThought(@RequestParam("question") String question) {
         return aiServiceChainOfThoughtPrompt.chainOfThought(question);
     }
 
 
-
 }
-
-
-
-
-
-
-
-
