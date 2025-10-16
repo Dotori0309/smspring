@@ -1,8 +1,8 @@
 package edu.sm.controller;
 
 
-import eud.sm.app.springai.service4.AiChatService;
-import eud.sm.app.springai.service4.ETLService;
+import edu.sm.app.springai.service4.AiChatService;
+import edu.sm.app.springai.service4.ETLService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
